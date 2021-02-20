@@ -21,4 +21,9 @@ class CarsController < ApplicationController
 
   def destroy
   end
+
+  def expensive
+    @car = Car.ordered_by_price.first
+  end
+  
 end

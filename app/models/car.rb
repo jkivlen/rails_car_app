@@ -10,4 +10,9 @@ class Car < ApplicationRecord
         display = split_price.join(".")
         "$#{display}"
     end
+
+    def self.ordered_by_price
+        self.order(price: :desc)
+
+    end
 end
