@@ -6,5 +6,9 @@ Rails.application.routes.draw do
   get '/cars/expensive', to: 'cars#expensive', as: 'expensive_car'
 
   resources :cars
+
+  get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
+
+
   resources :makes
 end

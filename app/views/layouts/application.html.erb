@@ -13,6 +13,7 @@
   <body>
   <%= link_to("Cars", cars_path)%>
   <%= link_to("Expensive Car", expensive_car_path)%>
+  <%= button_to("Log In With Google", '/auth/google_oauth2') %>
     <%= yield %>
   </body>
 </html>

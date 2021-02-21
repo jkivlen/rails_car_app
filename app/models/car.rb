@@ -1,5 +1,8 @@
 class Car < ApplicationRecord
 
+    belongs_to :make
+    # belongs_to :users
+
     def display_price
         split_price = self.price.to_s.split(".")
         if split_price[1].length == 1
