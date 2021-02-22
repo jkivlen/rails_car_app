@@ -3,12 +3,24 @@ Rails.application.routes.draw do
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  get '/cars/expensive', to: 'cars#expensive', as: 'expensive_car'
+  
 
-  resources :cars
+  # root 'sessions#welcome'  
 
   get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
 
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+  
+  get '/signup', to: 'users#new'
+  post '/signup', to: 'users#create'
+  get '/users/:id', to: 'users#show', as: 'user'
+
+
+  get '/cars/expensive', to: 'cars#expensive', as: 'expensive_car'
+
+  resources :cars
 
   resources :makes
 end

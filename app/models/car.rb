@@ -1,7 +1,7 @@
 class Car < ApplicationRecord
 
     belongs_to :make
-    # belongs_to :users
+    belongs_to :user
 
     def display_price
         split_price = self.price.to_s.split(".")
