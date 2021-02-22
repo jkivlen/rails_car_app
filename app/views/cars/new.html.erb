@@ -1,6 +1,18 @@
 <h1>Cars#new</h1>
 <p>Find me in app/views/cars/new.html.erb</p>
 
+<% if @car.errors.any? %>
+    <div id="error_explanation">
+        <h2><%= pluralize(@car.errors.count, "error") %> prohibited this car from being saved: </h2>
+
+        <ul>
+            <% @car.errors.full_messages.each do |error| %>
+                <li><%= error %></li>
+                <% end %>
+        </ul>
+    </div>
+<% end %>
+
 
 <%= form_for(@car) do |f| %>
     <%= f.label :make %>

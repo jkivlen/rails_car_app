@@ -3,6 +3,10 @@ class Car < ApplicationRecord
     belongs_to :make
     belongs_to :user
 
+    validates :make, :model, :color, :price, presence: true
+    validates :price, numericality: { greater_than: 0 }
+    validates :model, uniqueness: {scope: :color, message: "with that color has already been added"}
+
     def display_price
         split_price = self.price.to_s.split(".")
         if split_price[1].length == 1
