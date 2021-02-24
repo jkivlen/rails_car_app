@@ -9,5 +9,6 @@ class User < ApplicationRecord
             u.username = auth['info']['name']
             u.email = auth['info']['email']
             u.password = SecureRandom.hex(16)
+        end
     end
 end

@@ -5,10 +5,10 @@ class SessionsController < ApplicationController
     end
 
     def create
-        user = User.find_by_email(params[:email])
-        if user && user.authenticate(params[:password])
-            session[:user_id] = user.id
-            redirect_to user_path(user)
+        u = User.find_by_email(params[:email])
+        if u && u.authenticate(params[:password])
+            session[:user_id] = u.id
+            redirect_to user_path(u)
         else
             flash[:message] = "Invalid credentials. Please try again"
             redirect_to '/login'

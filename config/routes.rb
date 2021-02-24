@@ -22,5 +22,9 @@ Rails.application.routes.draw do
 
   resources :cars
 
-  resources :makes
+  resources :makes, only: [:new, :create, :index, :show] do
+    resources :cars, only: [:new, :create, :index]
+  end
+
+
 end

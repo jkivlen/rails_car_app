@@ -11,6 +11,7 @@
   </head>
 
   <body>
+  <h1>CARS</h1>
   <%= link_to("Cars", cars_path)%>
   <%= link_to("Make A Car", new_car_path) %>
   <%= link_to("Expensive Car", expensive_car_path)%>
@@ -20,7 +21,7 @@
 
     <% if flash[:message] %>
       <div class="field_with_errors"><%= flash[:message] %></div>
-    <% end %>
+      <% end %>
 
     <%= yield %>
   </body>

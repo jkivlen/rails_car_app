@@ -1,39 +1,52 @@
 class CarsController < ApplicationController
+  layout "car"
+
+  before_action :set_shoe, :redirect_if_not_owner, only: [:show, :edit, :update, :destroy]
 
   def new
-    @car = Car.new
+    if params[:make_id] && @make = Make.find_by_id(params[:make_id])
+      @car = @make.cars.build
+    else
+      @car = Car.new
+      @car.build_make
+    end
+
+    
   end
 
   def create
-    @car = Car.new(car_params)
+    # @car = Car.new(car_params)
+    @car = current_user.cars.build(car_params)
     if @car.save
       redirect_to car_path(@car)
     else
+      @make = Make.find_by_id(params[:make_id]) if params[:make_id]
       render :new
     end
   end
 
   def index
-    @cars = Car.all
+    if params[:make_id] && @make = Make.find_by_id(params[:make_id])
+      @cars = @make.cars
+    else
+      @cars = Car.all
+    end
   end
 
   def show
-    @car = Car.find(params[:id])
   end
 
   def edit
-    @car = Car.find(params[:id])
+   
   end
 
   def update
-    car = Car.find(params[:id])
-    car.update(car_params[:id])
+    @car.update(car_params[:id])
     redirect_to car_path(car)
   end
 
   def destroy
-    car = Car.find(params[:id])
-    car.destroy
+    @car.destroy
     redirect_to cars_path
   end
 
@@ -44,7 +57,17 @@ class CarsController < ApplicationController
   private
 
   def car_params
-    params.require(:car).permit(:make, :model, :price, :color)
+    params.require(:car).permit(:price, :color, :four_wheel_drive, :make_id, :user_id, make_attributes: [:name])
   end
+
+  def redirect_if_not_owner
+    if current_user != @car.user
+      redirect_to user_path(current_user), alert: "Not your car"
+  end
+
+  def set_car
+    @car = Car.find(params[:id])
+  end
+
 
 end

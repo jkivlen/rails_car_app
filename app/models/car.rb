@@ -2,12 +2,22 @@ class Car < ApplicationRecord
 
     belongs_to :make
     belongs_to :user
+    # accepts_nested_attributes_for :make
 
-    validates :make, :model, :color, :price, presence: true
+    validates :make, :color, :price, presence: true
     validates :price, numericality: { greater_than: 0 }
-    validates :model, uniqueness: {scope: :color, message: "with that color has already been added"}
+    validates :make, uniqueness: {scope: :color, message: "with that color has already been added"}
 
-    def display_price
+
+    def make_attributes=(attr)
+        self.make = Make.find_or_create_by(name: attr[:name])
+    end
+
+    def make_and_color
+        "#{self.make.try(:name)} - #{self.color}"
+    end
+
+    def display_price #just use number_to_currency instead
         split_price = self.price.to_s.split(".")
         if split_price[1].length == 1
             split_price[1] << "0"
